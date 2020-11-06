@@ -1,6 +1,7 @@
 package com.maxgen.roomdemoapplication.data;
 
 import android.content.Context;
+import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -24,12 +25,12 @@ public abstract class NoteDatabase extends RoomDatabase {
                         @Override
                         public void onCreate(@NonNull SupportSQLiteDatabase db) {
                             super.onCreate(db);
-                            NotesDao notesDao = database.notesDao();
+                            NotesDao noteDao = database.notesDao();
                             Note note = new Note();
                             note.setTitle("Title");
                             note.setDescription("description");
-                            notesDao.insert(note);
-
+                            noteDao.insert(note);
+                           // new PopulateDbAsyncTask(database).execute();
                         }
                     })
                     .fallbackToDestructiveMigration().build();
@@ -37,4 +38,20 @@ public abstract class NoteDatabase extends RoomDatabase {
         return database;
     }
 
+//    private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
+//        private NotesDao noteDao;
+//
+//        private PopulateDbAsyncTask(NoteDatabase db) {
+//            noteDao = db.notesDao();
+//        }
+//
+//        @Override
+//        protected Void doInBackground(Void... voids) {
+//            Note note = new Note();
+//            note.setTitle("Title");
+//            note.setDescription("description");
+//            noteDao.insert(note);
+//            return null;
+//        }
+//    }
 }
