@@ -5,7 +5,7 @@
 
         <variable
             name="note"
-            type="com.maxgen.roomdemoapplication.Note" />
+            type="com.maxgen.roomdemoapplication.model.Note" />
     </data>
 
     <LinearLayout

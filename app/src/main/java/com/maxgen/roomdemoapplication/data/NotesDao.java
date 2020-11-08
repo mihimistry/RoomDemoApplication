@@ -7,7 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.maxgen.roomdemoapplication.Note;
+import com.maxgen.roomdemoapplication.model.Note;
 
 import java.util.List;
 

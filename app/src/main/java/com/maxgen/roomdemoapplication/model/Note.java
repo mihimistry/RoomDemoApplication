@@ -1,4 +1,4 @@
-package com.maxgen.roomdemoapplication;
+package com.maxgen.roomdemoapplication.model;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

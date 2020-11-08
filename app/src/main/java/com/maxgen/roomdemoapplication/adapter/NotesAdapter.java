@@ -1,13 +1,12 @@
 package com.maxgen.roomdemoapplication.adapter;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.maxgen.roomdemoapplication.Note;
+import com.maxgen.roomdemoapplication.model.Note;
 import com.maxgen.roomdemoapplication.databinding.NotesListViewBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,12 +23,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
     @NonNull
     @Override
     public NotesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new NotesViewHolder(NotesListViewBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false));
+        return new NotesViewHolder(NotesListViewBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull NotesViewHolder holder, int position) {
-
         holder.setData(noteList.get(position));
     }
 
@@ -40,9 +38,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
 
     public class NotesViewHolder extends RecyclerView.ViewHolder {
         NotesListViewBinding binding;
+
         public NotesViewHolder(@NonNull NotesListViewBinding itemView) {
             super(itemView.getRoot());
-            binding=itemView;
+            binding = itemView;
         }
 
         public void setData(Note note) {

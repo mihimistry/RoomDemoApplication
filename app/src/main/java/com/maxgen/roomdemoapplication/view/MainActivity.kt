@@ -1,7 +1,9 @@
-package com.maxgen.roomdemoapplication
+package com.maxgen.roomdemoapplication.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,16 +19,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModel = ViewModelProviders.of(this).get(RoomViewModel::class.java)
-
+        val factory=ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+        val viewModel:RoomViewModel = ViewModelProvider(this,factory).get(RoomViewModel::class.java)
         val notesList = viewModel.notesList
 
-        notesList.observe(this, {
+        notesList.observe(this, Observer {
             adapter = NotesAdapter(it)
             binding.rv.adapter = adapter
         })
 
         binding.rv.layoutManager=LinearLayoutManager(this)
 
+        binding.fabAddNote.setOnClickListener {
+            startActivity(Intent(this,AddNoteActivity::class.java))
+        }
     }
 }
