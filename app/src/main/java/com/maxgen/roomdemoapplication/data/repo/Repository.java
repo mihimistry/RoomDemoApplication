@@ -28,7 +28,7 @@ public class Repository {
     }
 
     public void delete(Note note) {
-        notesDao.delete(note);
+        new DeleteNote().execute(note);
     }
 
     public void update(Note note) {
@@ -55,6 +55,14 @@ public class Repository {
         @Override
         protected Void doInBackground(Note... note) {
             notesDao.insert(note[0]);
+            return null;
+        }
+    }
+
+    public class DeleteNote extends AsyncTask<Note, Void, Void> {
+        @Override
+        protected Void doInBackground(Note... notes) {
+            notesDao.delete(notes[0]);
             return null;
         }
     }
