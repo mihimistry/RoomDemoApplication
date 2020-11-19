@@ -1,16 +1,18 @@
 package com.maxgen.roomdemoapplication.data.repo;
 
 import android.app.Application;
-import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
-import androidx.work.WorkManager;
 
-import com.maxgen.roomdemoapplication.model.Note;
 import com.maxgen.roomdemoapplication.data.NoteDatabase;
 import com.maxgen.roomdemoapplication.data.NotesDao;
+import com.maxgen.roomdemoapplication.model.Note;
 
 import java.util.List;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Repository {
 
@@ -24,15 +26,24 @@ public class Repository {
     }
 
     public void insert(Note note) {
-        new InsertNote(notesDao).execute(note);
+        Observable.fromRunnable(() -> notesDao.insert(note))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
     public void delete(Note note) {
-        new DeleteNote().execute(note);
+        Observable.fromRunnable(() -> notesDao.delete(note))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
     public void update(Note note) {
-        notesDao.update(note);
+        Observable.fromRunnable(() -> notesDao.update(note))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
     public LiveData<List<Note>> getNoteList() {
@@ -44,27 +55,5 @@ public class Repository {
     }
 
 
-    public class InsertNote extends AsyncTask<Note, Void, Void> {
-
-        NotesDao notesDao;
-
-        public InsertNote(NotesDao notesDao) {
-            this.notesDao = notesDao;
-        }
-
-        @Override
-        protected Void doInBackground(Note... note) {
-            notesDao.insert(note[0]);
-            return null;
-        }
-    }
-
-    public class DeleteNote extends AsyncTask<Note, Void, Void> {
-        @Override
-        protected Void doInBackground(Note... notes) {
-            notesDao.delete(notes[0]);
-            return null;
-        }
-    }
 }
 

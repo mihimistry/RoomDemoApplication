@@ -11,6 +11,8 @@ import com.maxgen.roomdemoapplication.model.Note;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+
 @Dao
 public interface NotesDao {
 

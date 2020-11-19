@@ -24,6 +24,7 @@ public class AddNoteActivity extends AppCompatActivity implements OnAddNoteListe
         viewModel = ViewModelProviders.of(this).get(RoomViewModel.class);
         binding.setViewModel(viewModel);
         viewModel.addNoteListener = this;
+
     }
 
     @Override
@@ -32,4 +33,5 @@ public class AddNoteActivity extends AppCompatActivity implements OnAddNoteListe
         Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
         finish();
     }
+
 }

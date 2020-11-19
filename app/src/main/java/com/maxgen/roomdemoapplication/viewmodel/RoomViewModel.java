@@ -20,8 +20,6 @@ public class RoomViewModel extends AndroidViewModel {
     public String description;
     public OnAddNoteListener addNoteListener;
 
-
-
     public RoomViewModel(@NonNull Application application) {
         super(application);
         repository = new Repository(application);
