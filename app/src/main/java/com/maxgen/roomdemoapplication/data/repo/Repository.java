@@ -9,6 +9,7 @@ import com.maxgen.roomdemoapplication.data.NotesDao;
 import com.maxgen.roomdemoapplication.model.Note;
 
 import java.util.List;
+import java.util.logging.Handler;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
@@ -26,10 +27,7 @@ public class Repository {
     }
 
     public void insert(Note note) {
-        Observable.fromRunnable(() -> notesDao.insert(note))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+        new Thread(new InsertNote(note)).start();
     }
 
     public void delete(Note note) {
@@ -54,6 +52,17 @@ public class Repository {
         notesDao.deleteAllNotes();
     }
 
+    public class InsertNote implements Runnable{
+        Note note;
+        public InsertNote(Note note) {
+            this.note = note;
+        }
+
+        @Override
+        public void run() {
+            notesDao.insert(note);
+        }
+    }
 
 }
 
